@@ -2,3 +2,4 @@ opencv-python-headless
 streamlit
 mediapipe
 numpy
+tensorflow-lite
