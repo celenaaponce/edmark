@@ -1,6 +1,6 @@
 import csv
 import streamlit as st
-from mediapipe import solutions
+import mediapipe as mp
 import cv2 as cv
 import numpy as np
 from model import KeyPointClassifier
@@ -91,7 +91,7 @@ st.set_option('deprecation.showfileUploaderEncoding', False)
 
 use_webcam = True
 
-drawing_spec = solutions.drawing_utils.DrawingSpec(thickness=2, circle_radius=1)
+drawing_spec = mp.solutions.drawing_utils.DrawingSpec(thickness=2, circle_radius=1)
 
 ## Get Video
 stframe = st.empty()
@@ -109,7 +109,7 @@ out = cv.VideoWriter('output1.mp4', codec, fps_input, (width,height))
 fps = 0
 i = 0
 
-drawing_spec = solutions.drawing_utils.DrawingSpec(thickness=2, circle_radius=1)
+drawing_spec = mp.solutions.drawing_utils.DrawingSpec(thickness=2, circle_radius=1)
 
 kpil, kpil2, kpil3 = st.columns(3)
 
@@ -136,7 +136,7 @@ success = False
 after_success = 0
 hand_sign_id = 1
 ## Face Mesh
-with solutions.holistic.Holistic(
+with mp.solutions.holistic.Holistic(
 min_detection_confidence=0.7,
 min_tracking_confidence=0.5
 ) as holistic:
@@ -159,9 +159,9 @@ min_tracking_confidence=0.5
                 #Face Landmark Drawing
                 for face_landmarks in results.pose_landmarks.landmark:
 
-                    solutions.drawing_utils.draw_landmarks(frame, results.pose_landmarks, solutions.holistic.POSE_CONNECTIONS, 
-                            solutions.drawing_utils.DrawingSpec(color=(80,22,10), thickness=2, circle_radius=4),  
-                            solutions.drawing_utils.DrawingSpec(color=(80,44,121), thickness=2, circle_radius=2) 
+                    mp.solutions.drawing_utils.draw_landmarks(frame, results.pose_landmarks, mp.solutions.holistic.POSE_CONNECTIONS, 
+                            mp.solutions.drawing_utils.DrawingSpec(color=(80,22,10), thickness=2, circle_radius=4),  
+                            mp.solutions.drawing_utils.DrawingSpec(color=(80,44,121), thickness=2, circle_radius=2) 
                             ) 
                 if results.left_hand_landmarks:
                 #left eye edge to thumb tip distance
@@ -173,9 +173,9 @@ min_tracking_confidence=0.5
                     #Face Landmark Drawing
                     for face_landmarks in results.left_hand_landmarks.landmark:
 
-                        solutions.drawing_utils.draw_landmarks(frame, results.left_hand_landmarks, solutions.holistic.HAND_CONNECTIONS, 
-                                solutions.drawing_utils.DrawingSpec(color=(80,22,10), thickness=2, circle_radius=4),  
-                                solutions.drawing_utils.DrawingSpec(color=(80,44,121), thickness=2, circle_radius=2) 
+                        mp.solutions.drawing_utils.draw_landmarks(frame, results.left_hand_landmarks, mp.solutions.holistic.HAND_CONNECTIONS, 
+                                mp.solutions.drawing_utils.DrawingSpec(color=(80,22,10), thickness=2, circle_radius=4),  
+                                mp.solutions.drawing_utils.DrawingSpec(color=(80,44,121), thickness=2, circle_radius=2) 
                                 ) 
             #     if results.right_hand_landmarks:
             #     #right eye edge to thumb tip distance
