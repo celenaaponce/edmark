@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import numpy as np
-import tensorflow.lite as lite
-
+import tensorflow
 
 class KeyPointClassifier(object):
     def __init__(
@@ -10,7 +9,7 @@ class KeyPointClassifier(object):
         model_path='model/keypoint_classifier/keypoint_classifier.tflite',
         num_threads=1,
     ):
-        self.interpreter = lite.Interpreter(model_path=model_path,
+        self.interpreter = tensorflow.lite.Interpreter(model_path=model_path,
                                                num_threads=num_threads)
 
         self.interpreter.allocate_tensors()
